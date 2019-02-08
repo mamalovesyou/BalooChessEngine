@@ -20,7 +20,7 @@ $ deactivate
 ```
 
 ### Todo
-TODO:
+
     - [ ] Implement a state class
     - [ ] Implement minmax algorithm
     - [ ] Implement game server
