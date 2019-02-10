@@ -38,8 +38,9 @@ def move():
             promotion_type = chess.Piece.from_symbol(promotion_symbol)
 
         next_move = board.san(chess.Move(src, tgt, promotion=promotion_type))
-        if next_move is not None:
-            board.push_san(next_move)
+        board.push_san(next_move)
+
+        if next_move is not None and not board.is_game_over():
             ai_move = minmax.next_move(node)
             board.push(ai_move)
 

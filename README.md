@@ -35,14 +35,21 @@ Note:
     play against the computer.
 
 Now I got a cool game server so I can play through my browser. But the AI still need at least 40s to make
-it first move so let's improve it with the Alpha Beta pruning technic.
+it first move so let's improve it with the Alpha Beta pruning technic. The alpha-beta pruning is based on
+the situation where we can stop evaluating a part of the search tree if we find a move that leads to a
+worse situation than a previously discovered move. The alpha-beta pruning does not
+influence the outcome of the minimax algorithm — it only makes it faster.
+
+Note:
+    The AI is much faster! Disclaimer: It still not that smart and easy to defeat.
+    Next step is to improve the value function. A good start for that is [here](https://www.chessprogramming.org/Simplified_Evaluation_Function)
 
 
 ### Todo
 
     - [x] Implement a Node class (Chess as Graph)
     - [x] Implement minmax algorithm
-        - [ ] A&B Pruning
+        - [x] A&B Pruning
         - [ ] Better value function
 
     - [x] Implement game server

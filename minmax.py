@@ -11,7 +11,7 @@ class MinMax:
         self.max_depth = max_depth
         self.valuator = Valuator()
 
-    def minmax(self, node, depth):
+    def minmax(self, node, depth, alpha, beta):
         """
         AI function that choice the best move
         :param node: current node of the board
@@ -34,15 +34,22 @@ class MinMax:
         # check value for each moves
         for m in node.edges():
             b.push(m)
-            tval = self.minmax(node, depth+1)
+            tval = self.minmax(node, depth+1, alpha, beta)
             b.pop()
 
             # if it's white turn then your goal is to maximize
             if b.turn == chess.WHITE:
                 best_val = max(best_val, tval)
+                alpha = max(alpha, best_val)
+                if (alpha <= beta):
+                    return best_val
+
             # if it's black turn then you want to minimize
             else:
                 best_val = min(best_val, tval)
+                beta = min(best_val, beta)
+                if (alpha >= beta):
+                    return best_val
 
         return best_val
 
@@ -61,7 +68,8 @@ class MinMax:
 
         for m in node.edges():
             b.push(m)
-            tval = self.minmax(node, depth)
+            tval = self.minmax(node, depth, self.valuator.MINVALUE,
+                    self.valuator.MAXVALUE)
             b.pop()
 
             if b.turn == chess.WHITE:
