@@ -31,8 +31,11 @@ have to keep in mind that we need our algorithm to not be so slow.
 
 Note:
     After having a functional minmax search with a depth of 4, it take way too long to find a move.
-    So For now, I'm gonna switch max depth to 3. Next step is to have a game server so that I can
+    I switched max depth to 3. Next step is to have a game server so that I can
     play against the computer.
+
+Now I got a cool game server so I can play through my browser. But the AI still need at least 40s to make
+it first move so let's improve it with the Alpha Beta pruning technic.
 
 
 ### Todo
@@ -42,6 +45,10 @@ Note:
         - [ ] A&B Pruning
         - [ ] Better value function
 
-    - [ ] Implement game server
+    - [x] Implement game server
+        - [ ] Add more design
+        - [ ] Add time took by AI
+        - [ ] Add AI type choice
+
     - [ ] Implement a simple NeuralNet
     - [ ] Implement a Convultional NeuralNet

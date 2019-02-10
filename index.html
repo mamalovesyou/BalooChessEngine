@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+
+<title>BalooChessEngine</title>
+
+<link rel="stylesheet" type="text/css" href="static/chessboard-0.3.0.min.css">
+
+<script src="static/jquery-3.3.1.min.js"></script>
+<script src="static/chessboard-0.3.0.min.js"></script>
+
+</head>
+<body style="font-size: 20px;">
+
+<button onclick="newGame()">new game</button><br/>
+<p>Promotion:
+    <select>
+      <option value="Q">Queen</option>
+      <option value="R">Rook</option>
+      <option value="K">Knight</option>
+      <option value="B">Bishop</option>
+    </select>
+</p>
+
+<p id="result"></p>
+
+<div id="board" style="width: 600px"></div>
+
+<script type="text/javascript">
+
+// Default selected promotion is queen
+var selectedPromotion = "Q"
+
+$(document).ready(function(){
+    $("select").change(function(){
+        selectedPromotion = $(this).children("option:selected").val();
+    });
+});
+
+var board = ChessBoard('board', {
+  position: 'zero_board',
+  pieceTheme: 'static/img/chesspieces/wikipedia/{piece}.png',
+  draggable: true,
+  onDrop: onDrop
+});
+
+var files = {"a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h": 7};
+
+function getSquare(sq) {
+  return 8*(parseInt(sq.charAt(1)) - 1) + files[sq.charAt(0)];
+}
+
+function onDrop(source, target, piece) {
+  if(source == target) return
+  var promotion = piece.toLowerCase().charAt(1) == 'p' && parseInt(target.charAt(1)) == 8;
+  $.get('/move', {'from': getSquare(source), 'to': getSquare(target), 'promotion': promotion, 'promotion_symbol': selectedPromotion}, function(r) {
+    if (r.includes("game over")) {
+      document.querySelector('#result').innerText = 'Game over';
+    } else {
+      document.querySelector('p').innerText = '';
+      board.position(r);
+    }
+  });
+}
+
+function newGame() {
+  $.get('/newgame', function(r) {
+    document.querySelector('#result').innerText = '';
+    board.position(r);
+  });
+}
+</script>
+
+</body>
+</html>

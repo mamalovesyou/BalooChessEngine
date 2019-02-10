@@ -40,7 +40,7 @@ def minmax(state, depth, count):
 
     return best_val
 
-def search_best_move(state):
+def minmax_move(state):
     start = time.time()
 
     b = state.get_board()
@@ -56,7 +56,6 @@ def search_best_move(state):
     for m in state.edges():
         b.push(m)
         tval = minmax(state, depth, count)
-        print(tval, m)
         b.pop()
 
         if b.turn == chess.WHITE:
@@ -72,9 +71,6 @@ def search_best_move(state):
     print("Best value: %.2f -> %s : explored %d nodes in %.3f seconds" %
             (best_val, str(best_move), count, eta))
 
-
-if __name__ == "__main__":
-    state = State()
-    search_best_move(state)
+    return best_move
 
 
