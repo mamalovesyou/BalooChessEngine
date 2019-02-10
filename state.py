@@ -25,6 +25,9 @@ class State(object):
         else:
             self._board = board
 
+    def get_board(self):
+        return self._board
+
     def serialize(self):
         """
         This method return a 1*64 numpy array as a representation of the state
