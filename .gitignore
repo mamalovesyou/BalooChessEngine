@@ -1,4 +1,6 @@
 BalooChessEnv
 
+__pycache__/
+*$py.class
 *.pyc
 *.swp
