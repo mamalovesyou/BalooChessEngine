@@ -1,14 +1,17 @@
 # Simple server to play chess
 
 import chess
+import traceback
 from flask import Flask, Response, request
 from node import Node
 from minmax import MinMax
+from valuator import Valuator
 
 app = Flask("Chess Server app")
 
 node = Node()
-minmax = MinMax()
+valuator = Valuator()
+minmax = MinMax(max_depth=3, valuator=valuator)
 
 @app.route("/")
 def index():
@@ -21,6 +24,7 @@ def index():
 def new_game():
     board = node.board
     board.reset()
+    valuator.reset()
     response = app.response_class(response=board.fen(), status=200)
     return response
 
@@ -32,17 +36,19 @@ def move():
         tgt = int(request.args.get('to', default=''))
 
         # Handle promotion case
-        promotion_type = None
+        promotion_symbol = None
         if request.args.get('promotion', default='') == 'true' :
             promotion_symbol = request.args.get('promotion_symbol', default='')
-            promotion_type = chess.Piece.from_symbol(promotion_symbol)
 
-        next_move = board.san(chess.Move(src, tgt, promotion=promotion_type))
-        board.push_san(next_move)
+        next_move = board.san(chess.Move(src, tgt, promotion=promotion_symbol))
 
-        if next_move is not None and not board.is_game_over():
-            ai_move = minmax.next_move(node)
-            board.push(ai_move)
+        if next_move is not None:
+            try:
+                board.push_san(next_move)
+                ai_move = minmax.next_move(node)
+                board.push(ai_move)
+            except:
+                traceback.print_exc()
 
     response = app.response_class(response=board.fen(), status=200)
     return response

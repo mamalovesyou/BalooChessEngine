@@ -1,15 +1,16 @@
 import time
 import chess
 from node import Node
-from valuator import Valuator
 
 class MinMax:
 
     DEFAULT_MAX_DEPTH = 4
 
-    def __init__(self, max_depth=DEFAULT_MAX_DEPTH):
+    def __init__(self, max_depth=DEFAULT_MAX_DEPTH, valuator=None):
         self.max_depth = max_depth
-        self.valuator = Valuator()
+        if valuator is None:
+            raise Exception("MinMax need a valuator.")
+        self.valuator = valuator
 
     def minmax(self, node, depth, alpha, beta):
         """
@@ -24,23 +25,16 @@ class MinMax:
         # check if depth is max depth or if game is over
         # then we return the value of the board
         if depth == self.max_depth or b.is_game_over():
-            return self.valuator(b)
+            return self.valuator(node)
 
         if b.turn == chess.WHITE:
             best_val = self.valuator.MINVALUE
         else:
             best_val = self.valuator.MAXVALUE
 
-        moves = []
-        for m in node.edges():
-            b.push(m)
-            moves.append((m, self.valuator(b)))
-            b.pop()
-        sorted_moves = sorted(moves, key=lambda x:x[1], reverse=b.turn)
-
 
         # check value for each moves
-        for m in [x[0] for x in sorted_moves]:
+        for m in node.edges():
 
             b.push(m)
             tval = self.minmax(node, depth+1, alpha, beta)
@@ -66,7 +60,6 @@ class MinMax:
         b = node.board
         depth = 0
         best_move = None
-        self.valuator.reset()
 
         start = time.time()
 

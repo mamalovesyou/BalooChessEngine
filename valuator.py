@@ -46,16 +46,23 @@ class Valuator:
 
     def __init__(self):
         self.count = 0
+        self.memory = {}
 
-    def __call__(self, board):
+    def __call__(self, node):
         """
         Each time Valuator is called, we increment counter
-        board: chess board
+        node: node with a chess board
         return: value of the board
         """
 
         self.count += 1
-        return self.value(board)
+        if node.key() in self.memory:
+            return self.memory[node.key()]
+
+        board = node.board
+        value = self.value(board)
+        self.memory[node.key()] = value
+        return value
 
 
     def _get_material_value(self, board):
@@ -110,10 +117,9 @@ class Valuator:
     def value(self, board):
         """
         Function that value a board.
-        board: chess board
+        node: node board
         return: float
         """
-
         # Check game over
         if board.is_game_over():
             #White win
@@ -127,7 +133,6 @@ class Valuator:
         value = 0
         value += self._get_material_value(board)
         value += self._get_all_masks_value(board, board.turn)
-
 
         return value
 

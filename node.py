@@ -13,6 +13,13 @@ class Node(object):
         else:
             self.board = board
 
+    def key(self):
+        """
+        Return a hash of the node
+        """
+        return hash((self.board.board_fen(), self.board.turn,
+                self.board.castling_rights, self.board.ep_square))
+
 
     def serialize(self):
         """
