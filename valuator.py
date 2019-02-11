@@ -6,12 +6,12 @@ class Valuator:
     """
 
     PIECES_VALUES = {
-        chess.PAWN:1,
-        chess.KNIGHT:3,
-        chess.BISHOP:3,
-        chess.ROOK:5,
-        chess.QUEEN:10,
-        chess.KING:100 }
+        chess.PAWN:100,
+        chess.KNIGHT:320,
+        chess.BISHOP:330,
+        chess.ROOK:500,
+        chess.QUEEN:900,
+        chess.KING:20000 }
 
     PIECES_SQUARE_VALUES = {
         chess.PAWN: [0, 0, 0, 0, 0, 0, 0, 0, 50, 50, 50, 50, 50, 50, 50, 50,
