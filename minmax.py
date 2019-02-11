@@ -24,15 +24,24 @@ class MinMax:
         # check if depth is max depth or if game is over
         # then we return the value of the board
         if depth == self.max_depth or b.is_game_over():
-            return self.valuator(node)
+            return self.valuator(b)
 
         if b.turn == chess.WHITE:
             best_val = self.valuator.MINVALUE
         else:
             best_val = self.valuator.MAXVALUE
 
-        # check value for each moves
+        moves = []
         for m in node.edges():
+            b.push(m)
+            moves.append((m, self.valuator(b)))
+            b.pop()
+        sorted_moves = sorted(moves, key=lambda x:x[1], reverse=b.turn)
+
+
+        # check value for each moves
+        for m in [x[0] for x in sorted_moves]:
+
             b.push(m)
             tval = self.minmax(node, depth+1, alpha, beta)
             b.pop()
