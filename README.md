@@ -21,7 +21,7 @@ $ deactivate
 
 ### Implementation
 
-#### MinMax
+#### MinMax Approach
 
 The general idea of minmax algorithm is to search among a tree of all possible games state,
 evaluate them and choose a path to the win node. It seems to be simple, but with chess
@@ -45,12 +45,34 @@ Note:
     Next step is to improve the value function. A good start for that is [here](https://www.chessprogramming.org/Simplified_Evaluation_Function)
 
 
+#### Neural Net Approach
+
+##### Processing the data
+The first step is to grab some data. Usualy chess game data are in the PGN format (Portable Game Notation).
+
+
+
+
 ### Todo
 
     - [x] Implement a Node class (Chess as Graph)
+
+    - [x] Write a value function
+        - [ ] Add more tests for the value function
+
     - [x] Implement minmax algorithm
-        - [x] A&B Pruning
-        - [ ] Better value function
+        - [x] Add Alpha-Beta Pruning
+        - [x] Add Piece Square Tables feature
+        - [x] Add Legal moves count feature
+        - [ ] Add Quiescence Search
+
+    - [x] Build a dataset
+        - [x] Process PGN Data
+        - [x] Add Multiprocessing
+
+    - [ ] Implement a Neural Net
+        - [ ] Add a board to array converter
+        - [ ] Implement
 
     - [x] Implement game server
         - [ ] Add more design
