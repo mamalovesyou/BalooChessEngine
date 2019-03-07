@@ -79,5 +79,4 @@ The first step is to grab some data. Usualy chess game data are in the PGN forma
         - [ ] Add time took by AI
         - [ ] Add AI type choice
 
-    - [ ] Implement a simple NeuralNet
     - [ ] Implement a Convultional NeuralNet
